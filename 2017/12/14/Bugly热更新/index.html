@@ -2,6 +2,15 @@
 <html>
 <head>
     
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
 
     
 
@@ -10,6 +19,8 @@
 
 
     <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
     
     
     
@@ -35,7 +46,7 @@
 <meta name="twitter:description" content="// 签名配置 123456789101112signingConfigs &amp;#123;    release &amp;#123;        try &amp;#123;            storeFile file(&amp;quot;key.jks&amp;quot;)            storePassword &amp;quot;******&amp;quot;            keyAlias &amp;quot;ke">
 <meta name="twitter:image" content="https://bugly.qq.com/docs/img/hotfix/android/Snip20170209_13.png?v=20170627170213">
     
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/img/photo.jpg">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
     <script>window.lazyScripts=[]</script>
 
@@ -314,6 +325,23 @@
 
 
 
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'baowenqing',
+            repo: 'git@github.com:baowenqing/baowenqing.github.io.git',
+            oauth: {
+                client_id: 'd552adfbd5678dcd5aac',
+                client_secret: '2688c9680ab8ba12a19d5d417729b7b5c3d988fe',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
 
 
 
@@ -474,7 +502,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
     var OriginTitile = document.title, titleTime;
     document.addEventListener('visibilitychange', function() {
         if (document.hidden) {
-            document.title = '';
+            document.title = '文庆的个人博客';
             clearTimeout(titleTime);
         } else {
             document.title = '文庆的个人博客';
