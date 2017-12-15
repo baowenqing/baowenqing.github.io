@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Bugly热更新 | 文庆的个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="热更新">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="// 签名配置 123456789101112signingConfigs &amp;#123;    release &amp;#123;        try &amp;#123;            storeFile file(&amp;quot;key.jks&amp;quot;)            storePassword &amp;quot;******&amp;quot;            keyAlias &amp;quot;ke">
+<meta name="keywords" content="热更新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bugly热更新">
+<meta property="og:url" content="https://baowenqing.github.io/posts/技术/Bugly热更新">
+<meta property="og:site_name" content="文庆的个人博客">
+<meta property="og:description" content="// 签名配置 123456789101112signingConfigs &amp;#123;    release &amp;#123;        try &amp;#123;            storeFile file(&amp;quot;key.jks&amp;quot;)            storePassword &amp;quot;******&amp;quot;            keyAlias &amp;quot;ke">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://bugly.qq.com/docs/img/hotfix/android/Snip20170209_13.png?v=20170627170213">
+<meta property="og:updated_time" content="2017-12-15T06:06:26.550Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bugly热更新">
+<meta name="twitter:description" content="// 签名配置 123456789101112signingConfigs &amp;#123;    release &amp;#123;        try &amp;#123;            storeFile file(&amp;quot;key.jks&amp;quot;)            storePassword &amp;quot;******&amp;quot;            keyAlias &amp;quot;ke">
+<meta name="twitter:image" content="https://bugly.qq.com/docs/img/hotfix/android/Snip20170209_13.png?v=20170627170213">
+    
+        <link rel="alternate" type="application/atom+xml" title="文庆的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/avatar.jpg">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=2.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">文庆</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:879694230@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/baowenqing" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Bugly热更新</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Bugly热更新"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Bugly热更新</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2017-12-14 11:01:54" datetime="2017-12-14T03:01:54.000Z"  itemprop="datePublished">2017-12-14</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">3</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>// 签名配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs &#123;</span><br><span class="line">    release &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            storeFile file(&quot;key.jks&quot;)</span><br><span class="line">            storePassword &quot;******&quot;</span><br><span class="line">            keyAlias &quot;key&quot;</span><br><span class="line">            keyPassword &quot;******&quot;</span><br><span class="line">        &#125; catch (ex) &#123;</span><br><span class="line">            throw new InvalidUserDataException(ex.toString())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>必须要配置<br>多渠道签名和热更新需要的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.build</span><br><span class="line">apply from: &apos;tinker-support.gradle&apos;</span><br><span class="line">// 多渠道使用walle示例（注：多渠道使用）</span><br><span class="line">apply plugin: &apos;walle&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//    热更新 热升级</span><br><span class="line">    compile &quot;com.android.support:multidex:1.0.1&quot; // 多dex配置</span><br><span class="line">    compile &apos;com.tencent.bugly:crashreport_upgrade:1.3.1&apos;//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0</span><br><span class="line">    compile &apos;com.tencent.bugly:nativecrashreport:latest.release&apos; //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0</span><br><span class="line">    //瓦力的多渠道打包</span><br><span class="line">    compile &apos;com.meituan.android.walle:library:1.1.3&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">walle &#123;</span><br><span class="line">//    打包执行的命令  gradlew clean assembleReleaseChannels</span><br><span class="line">    // 指定渠道包的输出路径</span><br><span class="line">    apkOutputFolder = new File(&quot;$&#123;project.buildDir&#125;/outputs/channels&quot;);</span><br><span class="line">    // 定制渠道包的APK的文件名称</span><br><span class="line">    apkFileNameFormat = &apos;$&#123;appName&#125;-$&#123;packageName&#125;-$&#123;channel&#125;-$&#123;buildType&#125;-v$&#123;versionName&#125;-$&#123;versionCode&#125;-$&#123;buildTime&#125;.apk&apos;;</span><br><span class="line">    // 渠道配置文件</span><br><span class="line">    channelFile = new File(&quot;$&#123;project.getProjectDir()&#125;/channel&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>项目.build</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// tinkersupport插件, 其中lastest.release指拉取最新版本，也可以指定明确版本号，例如1.0.4</span><br><span class="line">classpath &quot;com.tencent.bugly:tinker-support:1.0.8&quot;</span><br><span class="line">classpath &apos;com.meituan.android.walle:plugin:1.1.3&apos;</span><br><span class="line"></span><br><span class="line">public class App extends Application &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        super.onCreate();</span><br><span class="line">        //设置是开发者的设备</span><br><span class="line">        Bugly.setIsDevelopmentDevice(getApplicationContext(),true);</span><br><span class="line">        String channel = WalleChannelReader.getChannel(getApplication());</span><br><span class="line">        Bugly.setAppChannel(getApplication(), channel);</span><br><span class="line"></span><br><span class="line">        Bugly.init(this, &quot;******&quot;, true);</span><br><span class="line">        Beta.smallIconId = R.drawable.pikaqiu;</span><br><span class="line">        Beta.defaultBannerId  = R.drawable.pikaqiu;</span><br><span class="line">        Beta.canShowUpgradeActs.add(MainActivity.class);</span><br><span class="line">        Beta.storageDir = Environment.</span><br><span class="line">                getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);</span><br><span class="line">        Beta.initDelay = 1 * 1000;</span><br><span class="line">        Beta.autoInit = false;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    protected void attachBaseContext(Context base) &#123;</span><br><span class="line">        super.attachBaseContext(base);</span><br><span class="line">        // you must install multiDex whatever tinker is installed!</span><br><span class="line">        MultiDex.install(base);</span><br><span class="line">        // 安装tinker</span><br><span class="line">        Beta.installTinker();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个是  正式版打包（目前上的基准包）</p>
+<p>发布 补丁的话  要求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">里面的</span><br><span class="line">/**</span><br><span class="line">* 此处填写每次构建生成的基准包目录  新版本发布的时候 建议保存一份</span><br><span class="line">*/</span><br><span class="line">def baseApkDir = &quot;app-0630-13-26-10&quot;</span><br><span class="line"></span><br><span class="line">// 构建基准包和补丁包都要指定不同的tinkerId，并且必须保证唯一性</span><br><span class="line">tinkerId = &quot;1.0.4&quot;（唯一的一个名字就行 不用和项目的版本号一样）</span><br><span class="line">要更改</span><br><span class="line">安装正式包的  需要安装基带下的apk  或者用瓦力打包  瓦力打包下的 相当于加了基带</span><br><span class="line"></span><br><span class="line">修改需要改动的bug代码</span><br></pre></td></tr></table></figure>
+<p><strong>执行buildAllFlavorsTinkerPatchRelease生成所有渠道补丁包</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://bugly.qq.com/docs/img/hotfix/android/Snip20170209_13.png?v=20170627170213" alt="image" title="">
+                </div>
+                <div class="image-caption">image</div>
+            </figure></p>
+<p>得到的patch文件夹的  7zip这个文件就是补丁啦</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2017-12-15T06:06:26.550Z" itemprop="dateUpdated">2017-12-15 14:06:26</time>
+</span>
+
+
+        
+        加油，为了更好的明天！
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://baowenqing.github.io'">
+            <img src="/img/avatar.jpg" alt="文庆">
+            <a>文庆</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/热更新/">热更新</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://baowenqing.github.io/posts/技术/Bugly热更新&title=《Bugly热更新》 — 文庆的个人博客&pic=https://baowenqing.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://baowenqing.github.io/posts/技术/Bugly热更新&title=《Bugly热更新》 — 文庆的个人博客&source=O(∩_∩)O" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://baowenqing.github.io/posts/技术/Bugly热更新" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Bugly热更新》 — 文庆的个人博客&url=https://baowenqing.github.io/posts/技术/Bugly热更新&via=https://baowenqing.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://baowenqing.github.io/posts/技术/Bugly热更新" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/技术/内存泄漏优化---Handler引发内存泄漏" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：Handler引发内存泄漏
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/技术/【转载】手把手教你建github技术博客" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：【转载】手把手教你建github技术博客">下一篇：【转载】手把手教你建github技术博客</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'd552adfbd5678dcd5aac',
+            clientSecret: '2688c9680ab8ba12a19d5d417729b7b5c3d988fe',
+            repo: 'baowenqing.github.io',
+            owner: 'baowenqing',
+            admin: ['baowenqing']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2017
+            <i class="icon icon-lg icon-heart"></i>
+            <a href="https://baowenqing.github.io"></a>
+            <br/>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a>
+        </span>
+    
+        <br/>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+        
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+        
+        <span class="license"><a  target="_blank" rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+    </div>      
+</footer>
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>请我喝个小旺仔~</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://baowenqing.github.io/posts/技术/Bugly热更新&title=《Bugly热更新》 — 文庆的个人博客&pic=https://baowenqing.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://baowenqing.github.io/posts/技术/Bugly热更新&title=《Bugly热更新》 — 文庆的个人博客&source=O(∩_∩)O" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://baowenqing.github.io/posts/技术/Bugly热更新" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Bugly热更新》 — 文庆的个人博客&url=https://baowenqing.github.io/posts/技术/Bugly热更新&via=https://baowenqing.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://baowenqing.github.io/posts/技术/Bugly热更新" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOUlEQVR42u3aS5KDMAxF0ex/0/Q0VWnMfZL7g7gepQgJPgxUsqTXC6/jbb1f+fx89u3nPemdG5YMGTJuyziWa/0A8uD1f5J71nuTIUPGcxgkFBIACa/rX62fe3pdhgwZMsB2ebK4vl+GDBky+gySunXCqwwZMmR0DrEkgKbX/+AsLkOGjBsyeNX99z//SH9DhgwZt2Ic4drbTqjt4ZtnyZAhYzSDB7hackaOvrWAK0OGjOcwai2BWugkJTMSoF+o9iZDhozJjLSU3x+zWIdgVPKTIUPGaEZtqIJvolbI4y1MGTJkPIfBc61OTT4d2kgPxjJkyJjK4KV/HiJ5wW5X8JUhQ8ZsBi/AdQpt/RcRtxBkyJAxjrE37WsFyvCQLEOGjOcweNGNR26CrLUBLgK0DBkyxjFIOax2xOVjrOnAa9yXkCFDxghGrbnYGcXotwQuZkZkyJAxjtEv1pPf8m3xZsPmnoMMGTL+JSNtFvIHp2NkfNSjeJSVIUPGaEatMZkeg9ME8bQlIEOGjIcxeNGfY9JGadDAkCFDxgMY6ZhFLXHspIwoNZQhQ8ZoRjpskQZE/g/F4qAMGTKGMo5wpS3J2kuJS3gyZMgYzegEu3TA4uIIGobsIkyGDBm3ZZDNdYpl6SjGtskRGTJkjGMEJfhSka7WhOC7lSFDhozOQFg6hFEsycmQIUMG3lzajKy9MtSJlSFDxjgGT+n2lslI+wGNbsiQIWM0I827SFJYa3ySguCG/oYMGTLuxPgCGMOTYTGhEyUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=2.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=2.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=2.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+/* 关于页面 布局优化 */
+if(location.href.indexOf("about")!==-1&&window.innerWidth<1200){
+	/*移动设备 内容会出现内边距*/
+	document.querySelector(".post-content").classList.add("about");
+}
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2017/07/15");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "文庆");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 一个坏掉的番茄 %c  © Simon Ma  http://tomotoes.com \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+</body>
+</html>
