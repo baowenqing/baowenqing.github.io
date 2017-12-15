@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Handler引发内存泄漏 | 文庆的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="内存泄漏优化">
+    <meta name="description" content="我们使用Handler的时候经常会有下面的提示： This Handler class should be static or leaks might occur 打开more：Since this Handler is declared as an inner class, it may prevent the outer class from being garbage collected.">
+<meta name="keywords" content="内存泄漏优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Handler引发内存泄漏">
+<meta property="og:url" content="https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/index.html">
+<meta property="og:site_name" content="文庆的个人博客">
+<meta property="og:description" content="我们使用Handler的时候经常会有下面的提示： This Handler class should be static or leaks might occur 打开more：Since this Handler is declared as an inner class, it may prevent the outer class from being garbage collected.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-12-15T02:29:48.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Handler引发内存泄漏">
+<meta name="twitter:description" content="我们使用Handler的时候经常会有下面的提示： This Handler class should be static or leaks might occur 打开more：Since this Handler is declared as an inner class, it may prevent the outer class from being garbage collected.">
+    
+    <link rel="shortcut icon" href="/img/avatar.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">文庆</h5>
+          <a href="mailto:879694230@qq.com" title="879694230@qq.com" class="mail">879694230@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                档案
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/baowenqing" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Handler引发内存泄漏</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Handler引发内存泄漏</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-12-15T00:01:54.000Z" itemprop="datePublished" class="page-time">
+  2017-12-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#This-Handler-class-should-be-static-or-leaks-might-occur-打开more："><span class="post-toc-text"><a href="#This-Handler-class-should-be-static-or-leaks-might-occur-&#x6253;&#x5F00;more&#xFF1A;" class="headerlink" title="This Handler class should be static or leaks might occur &#x6253;&#x5F00;more&#xFF1A;"></a>This Handler class should be static or leaks might occur &#x6253;&#x5F00;more&#xFF1A;</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#大概意思就是："><span class="post-toc-text"><a href="#&#x5927;&#x6982;&#x610F;&#x601D;&#x5C31;&#x662F;&#xFF1A;" class="headerlink" title="&#x5927;&#x6982;&#x610F;&#x601D;&#x5C31;&#x662F;&#xFF1A;"></a>&#x5927;&#x6982;&#x610F;&#x601D;&#x5C31;&#x662F;&#xFF1A;</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方案一"><span class="post-toc-text"><a href="#&#x65B9;&#x6848;&#x4E00;" class="headerlink" title="&#x65B9;&#x6848;&#x4E00;"></a>&#x65B9;&#x6848;&#x4E00;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方案二"><span class="post-toc-text"><a href="#&#x65B9;&#x6848;&#x4E8C;" class="headerlink" title="&#x65B9;&#x6848;&#x4E8C;"></a>&#x65B9;&#x6848;&#x4E8C;</span></a>
+        </nav>
+    </aside>
+    
+<article id="post-内存泄漏优化---Handler引发内存泄漏"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Handler引发内存泄漏</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-12-15 08:01:54" datetime="2017-12-15T00:01:54.000Z"  itemprop="datePublished">2017-12-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>我们使用Handler的时候经常会有下面的提示：</p>
+<h4 id="This-Handler-class-should-be-static-or-leaks-might-occur-打开more："><a href="#This-Handler-class-should-be-static-or-leaks-might-occur-打开more：" class="headerlink" title="This Handler class should be static or leaks might occur 打开more："></a>This Handler class should be static or leaks might occur 打开more：</h4><p>Since this Handler is declared as an inner class, it may prevent the outer class from being garbage collected. If the Handler is using a Looper or MessageQueue for a thread other than the main thread, then there is no issue. If the Handler is using the Looper or MessageQueue of the main thread, you need to fix your Handler declaration, as follows: Declare the Handler as a static class; In the outer class, instantiate a WeakReference to the outer class and pass this object to your Handler when you instantiate the Handler; Make all references to members of the outer class using the WeakReference object.</p>
+<h4 id="大概意思就是："><a href="#大概意思就是：" class="headerlink" title="大概意思就是："></a>大概意思就是：</h4><p>一旦Handler被声明为内部类，那么可能导致它的外部类不能够被垃圾回收。如果Handler是在其他线程（我们通常成为worker thread）使用Looper或MessageQueue（消息队列），而不是main线程（UI线程），那么就没有这个问题。如果Handler使用Looper或MessageQueue在主线程（main thread），你需要对Handler的声明做如下修改：<br>声明Handler为static类；在外部类中实例化一个外部类的WeakReference（弱引用）并且在Handler初始化时传入这个对象给你的Handler；将所有引用的外部类成员使用WeakReference对象。</p>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>根据提示我们的方案是写一个继承Handler的内部类，在内部类的的构造方法中让Handler持有Activity的弱引用对象，代码如下：</p>
+<pre><code>    public class SplashActivity extends Activity {  
+
+    private SkipHandler handler = new SkipHandler(SplashActivity.this);  
+
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        requestWindowFeature(Window.FEATURE_NO_TITLE);  
+        setContentView(R.layout.layout_activity_splash);  
+
+        isFirstRun();  
+    }  
+
+    /**  
+     * 方法描述：检测该应用是否是第一次运行  
+     */  
+    private void isFirstRun() {  
+        //检测是否是第一次运行该APP  
+        boolean isFirstRun = getSharedPreferences(&quot;FIRST_RUN&quot;, Context.MODE_PRIVATE).getBoolean(&quot;isFirstRun&quot;, true);  
+
+        if (isFirstRun) {  
+            handler.sendEmptyMessageDelayed(0, 1000);  
+        } else {  
+            handler.sendEmptyMessageDelayed(1, 2000);  
+        }  
+    }  
+
+
+    /**  
+     * 类描述：防止Handler造成Activity的内存泄漏  
+     */  
+    private static class SkipHandler extends Handler {  
+        WeakReference&lt;Activity&gt; mWeakActivity;  
+
+        /**  
+         * 方法描述：构造方法，Handler持有SplashActivity的弱引用对象  
+         * @param activity  
+         */  
+        public SkipHandler(Activity activity) {  
+
+            mWeakActivity = new WeakReference&lt;Activity&gt;(activity);  
+        }  
+
+        @Override  
+        public void handleMessage(Message msg) {  
+            super.handleMessage(msg);  
+            if (null != mWeakActivity) {  
+                SplashActivity mActivity = (SplashActivity) mWeakActivity.get();  
+                switch (msg.what) {  
+                    case 0:  
+                        this.skipOtherActivity(mActivity, WelcomeActivity.class);  
+                        break;  
+                    case 1:  
+                        this.skipOtherActivity(mActivity, HomeActivity.class);  
+                        break;  
+                }  
+            }  
+        }  
+
+        /**  
+         * 方法描述：跳转到不同的Activity  
+         *  
+         * @param activity  
+         * @param cls  
+         */  
+        private void skipOtherActivity(Activity activity, Class&lt;? extends Activity&gt; cls) {  
+            Intent intent = new Intent(activity, cls);  
+            activity.startActivity(intent);  
+            activity.finish();  
+        }  
+    }  
+}
+</code></pre><h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p>我们分析一下，有时候我们开启线程下载东西然后用Handler去更新UI，但是我们科恩个遇到这种情况：打开Activity然后又立即把Activity销毁，但此刻也许我们的工作线程然在执行下载的好事操作，而此刻Activity有执行destroy方法，但Handler一直持有Activity的对象从而导致Activity内存的泄漏。<br>我们的解决方案可以是在Activity执行Destroy方法时停止工作线程，清空MessageQueue中所有的消息。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-12-15T02:29:48.798Z" itemprop="dateUpdated">2017-12-15 10:29:48</time>
+</span><br>
+
+
+        
+        加油，为了更好的明天！
+        
+    </div>
+    <footer>
+        <a href="https://baowenqing.github.io">
+            <img src="/img/avatar.jpg" alt="文庆">
+            文庆
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存泄漏优化/">内存泄漏优化</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/&title=《Handler引发内存泄漏》 — 文庆的个人博客&pic=https://baowenqing.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/&title=《Handler引发内存泄漏》 — 文庆的个人博客&source=O(∩_∩)O" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Handler引发内存泄漏》 — 文庆的个人博客&url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/&via=https://baowenqing.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/12/14/Bugly热更新/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Bugly热更新</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'baowenqing',
+            repo: 'baowenqing.github.io',
+            oauth: {
+                client_id: 'd552adfbd5678dcd5aac',
+                client_secret: '2688c9680ab8ba12a19d5d417729b7b5c3d988fe',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我喝个小旺仔~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>文庆 &copy; 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/&title=《Handler引发内存泄漏》 — 文庆的个人博客&pic=https://baowenqing.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/&title=《Handler引发内存泄漏》 — 文庆的个人博客&source=O(∩_∩)O" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Handler引发内存泄漏》 — 文庆的个人博客&url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/&via=https://baowenqing.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://baowenqing.github.io/2017/12/15/内存泄漏优化---Handler引发内存泄漏/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADMklEQVR42u3awY7qMAwF0Pn/n+ZtRxo1XNt9ErinK0RLyAmLYN/8/MTX69d1fufqbj7y37t/X189c/OFjY2N/SXs1/GqPjOZ9Blwnk8+T2xsbOyt7HxCb4Y7jnz+rmQRq0t/+T42Njb2g9nVRTkvU/WZ28oVbGxs7Aez80ZSzsifyRtb2NjY2E9j53/xk7tVQK90qW6f2NjY2FvZeSr6+a//S76NjY2N/cHsV/GaxLdJMNDbRMsKbGxs7EXsfAPI/9BPGkl5AFwtM7CxsbG3sqvbQzWgnSxQr+SIPouNjY29iH1XS726NHdtSL0fDBsbG3sT+/yBanvoPE4yrWTk6l1sbGzsJ7DvbfRMIoReAyt5/zIVwcbGxl7EzjeznJ0XHnm5EsGSeAAbGxt7BTsvQiYlwV2FRxIkFCIKbGxs7BXspHiYRAW98DhveFVnHh3ZwcbGxv5ydq+Vk8e0kzbWZPd5c1IJGxsbewU7/7tfjQSqW1GyiKOSCRsbG3sROx8iLzzykqPXfsrHfDMTbGxs7EXsKml+N1myanFSDnqxsbGxF7Hzoza9UDbffvJNMV+I0cphY2Njfzx7stdNIoHeQZzbyg9sbGzsRexqez0/OpOMPBl/3nLCxsbG3sSet/7z4mGyHfbChnLsgY2Njf1V7HzLqW5sVV7etEpev5kVNjY29iJ2MpV7A9pqONGLJaIFxcbGxl7Hrm5a1Sd7JUpSkCQNpstsBBsbG3spO/+LX1248waZ3K3GEs3WEjY2NvaXsPMSonpAs1fA9EKFcgaCjY2NvYjdKxgmx2JyQC8Szo8fYWNjY29i95ryyXZVLTnycqV6rKf8C2NjY2N/ITtvKuWfnX9Lr3UV/TzY2NjYD2BXm/55S6i6UY0aRlcibGxs7BXsV/GqxgY5YxIAlNtM2NjY2IvYdyWhk/C1d9wnL1fyZhk2Njb297Ln5UT1U5PI4baiBRsbG3sd+67WfFKcTJamN5/LOgwbGxv7kexeeFBtACXLNGo5YWNjYz+YPSlOqgFDrwkVNcKwsbGx17GrMW2VV12yHNBbYmxsbOxN7N5Ez2XJeeq9JtE8csbGxsZex/4HIhClgVjzb2gAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '文庆的个人博客';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '文庆的个人博客';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
